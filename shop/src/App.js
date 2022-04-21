@@ -1,9 +1,16 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React from 'react'
+import React, { useEffect, useState } from "react";
 import { Nav, Navbar, Form, Container, Offcanvas, FormControl, Button, NavDropdown } from 'react-bootstrap';
+import Data from './data.js';
+
 
 function App() {
+
+  let [shoesInfo, shoesInfoChg] = useState(Data);
+
+
+
   return (
     <div className="App">
       <Navbar bg="light" expand={false}>
@@ -49,28 +56,35 @@ function App() {
         20% Season Off!
       </div>
 
+
+
       <div className="container">
         <div className="row">
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes1.jpg" width="100%"></img>
-            <h4>상품명</h4>
-            <p>상품설명 , 가격</p>
-          </div>
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes2.jpg" width="100%"></img>
-            <h4>상품명</h4>
-            <p>상품설명 , 가격</p>
-          </div>
-          <div className="col-md-4">
-            <img src="https://codingapple1.github.io/shop/shoes3.jpg" width="100%"></img>
-            <h4>상품명</h4>
-            <p>상품설명 , 가격</p>
-          </div>
+        {
+        shoesInfo.map((data, idx)=>{
+          return(
+            <Card shoes={data} key={idx}></Card>
+          )      
+        })  
+        }
         </div>
       </div>
 
     </div>
   );
 }
+
+
+function Card(props) {
+  return (
+    <div className="col-md-4">
+      <img src={props.shoes.imgUrl} width="100%" alt="shoesImg"></img>
+      <h4>{props.shoes.title}</h4>
+      <p>{props.shoes.content}</p>
+      <p>{props.shoes.price}</p>
+    </div>
+  )
+};
+
 
 export default App;
