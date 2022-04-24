@@ -12,7 +12,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 
 function App() {
 
-  let [shoesInfo, shoesInfoChg] = useState(Data);
+  let [shoesData, shoesDataChg] = useState(Data);
 
 
 
@@ -47,7 +47,7 @@ function App() {
         <div className="container">
           <div className="row">
             {
-              shoesInfo.map((data, idx) => {
+              shoesData.map((data, idx) => {
                 return (
                   <Card shoes={data} key={idx}></Card>
                 )
@@ -56,8 +56,8 @@ function App() {
           </div>
         </div>
       </Route>
-      <Route path="/detail">
-            <Detail></Detail>
+      <Route path="/detail/:id">
+            <Detail shoesData={shoesData}></Detail>
       </Route>    
 
       <Route path="/:id">
