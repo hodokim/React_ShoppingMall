@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss';
@@ -9,17 +9,37 @@ let Box = styled.div`
 
 let Title = styled.h4`
     font-size : 25px;
-    color : ${ props => props.NewColor }
+    color : ${props => props.NewColor}
 `;
 
 
+//React 16.9 이전의 라이프사이클에 훅 걸기
+// class Detail2 extends React.Compoenent{
+//    componentDidMount(){
+
+//    } 
+
+//    componentWillUnmount(){
+
+//    }
+// }
+
+
 function Detail(props) {
+
+    useEffect(() => {
+        setTimeout(() => {
+            stockAlertChg(false);
+        }, 2000);
+    });
 
     let { id } = useParams();
     let history = useHistory();
     let findData = props.shoesData.find((data) => {
         return data.id == id;
     });
+    let [stockAlert, stockAlertChg] = useState(true);
+ 
 
 
     return (
@@ -29,9 +49,24 @@ function Detail(props) {
                 {/* <Box>
                     <Title className="red">후ㅡ후후</Title>
                 </Box> */}
-                <div className="my-alert-test">
-                    <p>이 상품은 재고가 얼마 남지 않았어요!</p>
-                </div>
+                
+                {
+                    stockAlert===true
+                    ?(
+                        <div className="my-alert-test">
+                            <p>이 상품은 재고가 얼마 남지 않았어요!</p>
+                        </div>
+                    )
+                    : null
+                   
+                }
+
+               
+               
+
+                    
+               
+
                 <div className="col-md-6">
                     <img src={findData.imgUrl} width="100%" alt="detail" />
                 </div>
