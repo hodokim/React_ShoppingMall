@@ -1,0 +1,57 @@
+
+@import './Reset.scss';
+
+// body {
+//     margin : 0;
+// }
+
+// $mainColor : #ff0000;
+
+
+
+
+// .red{
+//     color:$mainColor;
+// }
+
+// div.container {
+//     h4{
+//         color : blue;
+//     }
+//     p{
+//         color : red;
+//     }
+
+// }
+@mixin testFunction() {
+    background : #eeeeee;
+    padding : 20px;
+    border-radius:5px;
+    max-width:500px;
+    width:100%;
+    margin: auto;
+    p{
+        margin-bottom:0;
+    }
+}
+.my-alert {
+    background : #eeeeee;
+    padding : 20px;
+    border-radius:5px;
+    max-width:500px;
+    width:100%;
+    margin: auto;
+    p{
+        margin-bottom:0;
+    }
+}
+
+.my-alert-test{
+    @extend .my-alert;
+    background: #ffe591;
+}
+
+.my-alert-test2{
+   @include testFunction(); 
+}
+
