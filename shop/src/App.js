@@ -1,11 +1,10 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useEffect, useState } from "react";
-import { Nav, Navbar, Form, Container, 
-  Offcanvas, FormControl, Button, NavDropdown,
- } from 'react-bootstrap';
+import React, { useState } from "react";
+import {Nav, Navbar, Container,NavDropdown } from 'react-bootstrap';
 import Data from './data.js';
 import Detail from './Detail.js';
+import axios from 'axios';
 
 import { Link, Route, Switch } from 'react-router-dom';
 
@@ -39,32 +38,53 @@ function App() {
       </Navbar>
 
 
-    <Switch>
-      <Route exact path="/">
-        <div className="background">
-          20% Season Off!
-        </div>
-        <div className="container">
-          <div className="row">
-            {
-              shoesData.map((data, idx) => {
-                return (
-                  <Card shoes={data} key={idx}></Card>
-                )
-              })
-            }
+      <Switch>
+        <Route exact path="/">
+          <div className="background">
+            20% Season Off!
           </div>
-        </div>
-      </Route>
-      <Route path="/detail/:id">
-            <Detail shoesData={shoesData}></Detail>
-      </Route>    
+          <div className="container">
+            <div className="row">
+              {
+                shoesData.map((data, idx) => {
+                  return (
+                    <Card shoes={data} key={idx}></Card>
+                  )
+                })
+              }
+            </div>
+          </div>
+        </Route>
+        <Route path="/detail/:id">
+          <Detail shoesData={shoesData}></Detail>
+        </Route>
 
-      <Route path="/:id">
-            <div>test</div>
-      </Route>
-    </Switch>
+        <Route path="/:id">
+          <div>test</div>
+        </Route>
+      </Switch>
 
+      <button className="btn btn-primary" onClick={()=>{
+
+        
+
+        axios.get('https://codingapple1.github.io/shop/data2.json')
+        .then((result)=>{
+          //모범 답안
+          let data = result.data;
+          shoesDataChg([...shoesData, ...data])
+
+
+          //아래는 나의 풀이.
+          // let originCopy = [...shoesData];
+          // let data = result.data;
+          // data.forEach((x)=>{
+          //   originCopy.push(x);
+          // });
+          // shoesDataChg(originCopy);    
+        })
+        .catch(()=>{console.log('실패했습니다.')})
+      }}>더보기</button>
 
     </div>
   );

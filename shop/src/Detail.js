@@ -26,19 +26,22 @@ let Title = styled.h4`
 
 
 function Detail(props) {
-
+    //useEffect 는 mounted, updated 될때 작동한다.
+    let [stockAlert, stockAlertChg] = useState(true);
+    
     useEffect(() => {
-        setTimeout(() => {
+        let timer = setTimeout(() => {
             stockAlertChg(false);
         }, 2000);
-    });
+        return ()=>{clearTimeout(timer)}
+    },[]); //[] 를 넣으면 mounted 경우에만 실행되고 updated 일때는 실행안됨.
 
     let { id } = useParams();
     let history = useHistory();
     let findData = props.shoesData.find((data) => {
         return data.id == id;
     });
-    let [stockAlert, stockAlertChg] = useState(true);
+    
  
 
 
@@ -80,6 +83,8 @@ function Detail(props) {
                     }}>뒤로가기</button>
                 </div>
             </div>
+
+
         </div>
     )
 };
