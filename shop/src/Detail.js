@@ -77,7 +77,12 @@ function Detail(props) {
                     <h4 className="pt-5">{findData.title}</h4>
                     <p>{findData.content}</p>
                     <p>{findData.price}원</p>
-                    <button className="btn btn-danger">주문하기</button>
+
+                    <Stock stock={props.stock}></Stock>
+
+                    <button className="btn btn-danger" onClick={()=>{
+                        props.stockChg([9,11,12])
+                    }}>주문하기</button>
                     <button className="btn btn-danger" onClick={() => {
                         history.goBack();
                     }}>뒤로가기</button>
@@ -88,5 +93,12 @@ function Detail(props) {
         </div>
     )
 };
+
+
+function Stock(props){
+    return(
+        <p>재고 : {props.stock[0]}</p>
+    )
+}
 
 export default Detail;

@@ -1,7 +1,7 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { useState } from "react";
-import {Nav, Navbar, Container,NavDropdown } from 'react-bootstrap';
+import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import Data from './data.js';
 import Detail from './Detail.js';
 import axios from 'axios';
@@ -12,6 +12,7 @@ import { Link, Route, Switch } from 'react-router-dom';
 function App() {
 
   let [shoesData, shoesDataChg] = useState(Data);
+  let [stock, stockChg] = useState([10, 11, 12]);
 
 
 
@@ -56,7 +57,7 @@ function App() {
           </div>
         </Route>
         <Route path="/detail/:id">
-          <Detail shoesData={shoesData}></Detail>
+          <Detail shoesData={shoesData} stock={stock} stockChg={stockChg}></Detail>
         </Route>
 
         <Route path="/:id">
@@ -64,29 +65,28 @@ function App() {
         </Route>
       </Switch>
 
-      <button className="btn btn-primary" onClick={()=>{
-
-        
-
-        axios.get('https://codingapple1.github.io/shop/data2.json')
-        .then((result)=>{
-          //모범 답안
-          let data = result.data;
-          shoesDataChg([...shoesData, ...data])
+      <Route exact path="/">
+        <button className="btn btn-primary" onClick={() => {
+          axios.get('https://codingapple1.github.io/shop/data2.json')
+            .then((result) => {
+              //모범 답안
+              let data = result.data;
+              shoesDataChg([...shoesData, ...data])
 
 
-          //아래는 나의 풀이.
-          // let originCopy = [...shoesData];
-          // let data = result.data;
-          // data.forEach((x)=>{
-          //   originCopy.push(x);
-          // });
-          // shoesDataChg(originCopy);    
-        })
-        .catch(()=>{console.log('실패했습니다.')})
-      }}>더보기</button>
-
+              //아래는 나의 풀이.
+              // let originCopy = [...shoesData];
+              // let data = result.data;
+              // data.forEach((x)=>{
+              //   originCopy.push(x);
+              // });
+              // shoesDataChg(originCopy);    
+            })
+            .catch(() => { console.log('실패했습니다.') })
+        }}>더보기</button>
+      </Route>
     </div>
+
   );
 }
 
