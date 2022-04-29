@@ -1,12 +1,13 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import Data from './data.js';
 import Detail from './Detail.js';
 import axios from 'axios';
-
 import { Link, Route, Switch } from 'react-router-dom';
+
+export let stockContext = React.createContext();
 
 
 function App() {
@@ -45,6 +46,7 @@ function App() {
             20% Season Off!
           </div>
           <div className="container">
+            <stockContext.Provider value={stock}>
             <div className="row">
               {
                 shoesData.map((data, idx) => {
@@ -54,11 +56,17 @@ function App() {
                 })
               }
             </div>
-          </div>
+            </stockContext.Provider>
+          </div>          
         </Route>
+
+        
         <Route path="/detail/:id">
+          <stockContext.Provider value={stock}>
           <Detail shoesData={shoesData} stock={stock} stockChg={stockChg}></Detail>
+          </stockContext.Provider>
         </Route>
+       
 
         <Route path="/:id">
           <div>test</div>
@@ -93,15 +101,24 @@ function App() {
 
 
 function Card(props) {
+
+  let stock = useContext(stockContext);
   return (
     <div className="col-md-4">
-      <img src={props.shoes.imgUrl} width="100%" alt="shoesImg"></img>
+      <img src={'https://codingapple1.github.io/shop/shoes'+(props.shoes.id+1)+'.jpg'} width="100%" alt="shoesImg"></img>
       <h4>{props.shoes.title}</h4>
       <p>{props.shoes.content}</p>
       <p>{props.shoes.price}</p>
+      
+      <Test></Test>
     </div>
   )
 };
+
+function Test(){
+  let stock = useContext(stockContext);
+  return <p>재고 : {stock}</p>
+}
 
 
 export default App;

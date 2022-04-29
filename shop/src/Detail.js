@@ -1,7 +1,8 @@
-import React, { useState,useEffect } from "react";
+import React, { useState,useEffect, useContext } from "react";
 import { useHistory, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import './Detail.scss';
+import {stockContext} from './App.js'
 
 let Box = styled.div`
     padding : 20px;
@@ -28,6 +29,7 @@ let Title = styled.h4`
 function Detail(props) {
     //useEffect 는 mounted, updated 될때 작동한다.
     let [stockAlert, stockAlertChg] = useState(true);
+    let stock = useContext(stockContext)
     
     useEffect(() => {
         let timer = setTimeout(() => {
