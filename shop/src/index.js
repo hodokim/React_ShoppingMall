@@ -6,10 +6,40 @@ import reportWebVitals from './reportWebVitals';
 
 import { BrowserRouter } from 'react-router-dom';
 
+import { Provider } from 'react-redux'
+import { createStore } from 'redux';
+
+
+
+let defaultState = [
+  { id: 0, name: '나이키 축구화', quan: 1 },
+  { id: 1, name: '아디다스 복싱화', quan: 1 }, 
+]
+
+function reducer(state = defaultState, action){
+  if(action.type === 'inc'){
+    let copy = [...state];
+    copy[0].quan++;
+    return copy;
+  }else if(action.type === 'dec'){
+    let copy = [...state];
+    copy[0].quan--;
+    return copy;
+  }else{
+    return state;
+  }    
+}
+
+let store = createStore(reducer);
+
+
+
 ReactDOM.render(
   <React.StrictMode>
     <BrowserRouter>
+    <Provider store={store}>
       <App />
+    </Provider>
     </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
