@@ -7,7 +7,16 @@ import reportWebVitals from './reportWebVitals';
 import { BrowserRouter } from 'react-router-dom';
 
 import { Provider } from 'react-redux'
-import { createStore } from 'redux';
+import { combineReducers, createStore } from 'redux';
+
+let alertVal = true;
+
+function reducer2(state = alertVal, action){
+  if(action.type === 'popupClose'){
+    return false;
+  }
+  return state;
+}
 
 
 
@@ -17,7 +26,18 @@ let defaultState = [
 ]
 
 function reducer(state = defaultState, action){
-  if(action.type === 'inc'){
+  if(action.type === 'addList'){
+    let copy = [...state];
+    let id = action.payload.id;
+    console.log(copy)
+    copy = copy.map((x)=>{
+      if(x.id === id){
+        x.quan++
+      }
+      return x
+    })
+    return copy;
+  }else if(action.type === 'inc'){
     let copy = [...state];
     copy[0].quan++;
     return copy;
@@ -30,7 +50,9 @@ function reducer(state = defaultState, action){
   }    
 }
 
-let store = createStore(reducer);
+
+  let store = createStore(combineReducers({reducer, reducer2}));
+//let store = createStore(reducer);
 
 
 

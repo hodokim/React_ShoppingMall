@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import './Detail.scss';
 import { stockContext } from './App.js'
 import { CSSTransition } from 'react-transition-group';
+import { connect } from 'react-redux';
 
 let Box = styled.div`
     padding : 20px;
@@ -88,6 +89,8 @@ function Detail(props) {
 
                     <button className="btn btn-danger" onClick={() => {
                         props.stockChg([9, 11, 12])
+                        props.dispatch({type:'addList', payload : {id:1, name:'added', quan:1}})
+                        history.push('/cart');
                     }}>주문하기</button>
                     <button className="btn btn-danger" onClick={() => {
                         history.goBack();
@@ -134,4 +137,11 @@ function Stock(props) {
     )
 }
 
-export default Detail;
+function test(state) {
+    return {
+        state: state.reducer,
+        alertState: state.reducer2
+    }
+}
+
+export default connect(test)(Detail)

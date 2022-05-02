@@ -1,6 +1,7 @@
 import React from 'react'
 import { Table } from 'react-bootstrap';
 import { connect } from 'react-redux';
+import './Detail.scss';
 
 function Cart(props) {
     return (
@@ -27,19 +28,28 @@ function Cart(props) {
                         )
                     })
                 }
-
-
             </Table>
+            {
+                props.alertState === true
+                    ? <div className="my-alert-test">
+                        <p>지금 구매하시면 20% 추가할인!</p>
+                        <button onClick={()=>{ props.dispatch({type: 'popupClose'})}}>닫기</button>
+                    </div>
+                    : null
+
+            }
+
         </div>
     )
 }
 
-function test(state) {
+function toProps(state) {
     return {
-        state,
+        state : state.reducer,
+        alertState : state.reducer2
     }
 }
 
-export default connect(test)(Cart)
+export default connect(toProps)(Cart)
 
 //export default Cart;
