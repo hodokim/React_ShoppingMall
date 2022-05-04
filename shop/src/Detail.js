@@ -89,7 +89,7 @@ function Detail(props) {
 
                     <button className="btn btn-danger" onClick={() => {
                         props.stockChg([9, 11, 12])
-                        props.dispatch({type:'addList', payload : {id:1, name:'added', quan:1}})
+                        props.dispatch({type:'addList', payload : {id: findData.id, name:'added', quan:1}})
                         history.push('/cart');
                     }}>주문하기</button>
                     <button className="btn btn-danger" onClick={() => {

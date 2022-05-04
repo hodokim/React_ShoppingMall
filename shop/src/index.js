@@ -39,11 +39,11 @@ function reducer(state = defaultState, action){
     return copy;
   }else if(action.type === 'inc'){
     let copy = [...state];
-    copy[0].quan++;
+    copy[action.payload].quan++;
     return copy;
   }else if(action.type === 'dec'){
     let copy = [...state];
-    copy[0].quan--;
+    copy[action.payload].quan--;
     return copy;
   }else{
     return state;

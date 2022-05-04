@@ -1,9 +1,14 @@
 import React from 'react'
 import { Table } from 'react-bootstrap';
-import { connect } from 'react-redux';
+import { connect, useDispatch, useSelector } from 'react-redux';
 import './Detail.scss';
 
 function Cart(props) {
+
+    // let testVal = useSelector((state)=> state)
+    // console.log(testVal.reducer)
+    // let dispatch = useDispatch();
+
     return (
         <div>
             <Table responsive>
@@ -21,8 +26,8 @@ function Cart(props) {
                                 <td>{data.name}</td>
                                 <td>{data.quan}</td>
                                 <td>                                   
-                                    <button onClick={() => { props.dispatch({ type: 'dec' }) }}>-</button>
-                                    <button onClick={() => { props.dispatch({ type: 'inc' }) }}>+</button>
+                                    <button onClick={() => { props.dispatch({ type: 'dec', payload: data.id }) }}>-</button>
+                                    <button onClick={() => { props.dispatch({ type: 'inc', payload: data.id }) }}>+</button>
                                 </td>
                             </tr>
                         )
@@ -52,4 +57,4 @@ function toProps(state) {
 
 export default connect(toProps)(Cart)
 
-//export default Cart;
+// export default Cart;
