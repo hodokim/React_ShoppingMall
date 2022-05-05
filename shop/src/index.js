@@ -21,30 +21,44 @@ function reducer2(state = alertVal, action){
 
 
 let defaultState = [
-  { id: 0, name: '나이키 축구화', quan: 1 },
-  { id: 1, name: '아디다스 복싱화', quan: 1 }, 
+  { id: 9, name: '나이키 축구화', quan: 1 },
+  { id: 10, name: '아디다스 복싱화', quan: 1 }, 
 ]
 
 function reducer(state = defaultState, action){
   if(action.type === 'addList'){
     let copy = [...state];
-    let id = action.payload.id;
-    console.log(copy)
-    copy = copy.map((x)=>{
-      if(x.id === id){
-        x.quan++
-      }
-      return x
-    })
+    let found = state.findIndex((a)=> { 
+      return a.id === action.payload.id;
+    });
+
+    if(found >= 0){
+      copy[found].quan++;
+    }else{
+      copy.push(action.payload)
+    }
+
     return copy;
+
   }else if(action.type === 'inc'){
     let copy = [...state];
-    copy[action.payload].quan++;
+    copy.forEach((x, idx)=>{
+      if(x.id == action.payload){
+          copy[idx].quan++;
+      }
+    }) 
     return copy;
+
   }else if(action.type === 'dec'){
     let copy = [...state];
-    copy[action.payload].quan--;
+    copy.forEach((x, idx) => {
+      if (x.id == action.payload) {
+        copy[idx].quan--;
+      }
+    })
+
     return copy;
+  
   }else{
     return state;
   }    

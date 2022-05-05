@@ -1,13 +1,16 @@
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, lazy, Suspense } from "react";
 import { Nav, Navbar, Container, NavDropdown } from 'react-bootstrap';
 import Data from './data.js';
-import Detail from './Detail.js';
+
 import axios from 'axios';
 import { Link, Route, Switch } from 'react-router-dom';
 import Cart from './Cart.js';
 import { useHistory } from 'react-router-dom';
+
+// import Detail from './Detail.js';
+let Detail = lazy( ()=> { return import('./Detail.js') });
 
 export let stockContext = React.createContext();
 
@@ -65,7 +68,9 @@ function App() {
         
         <Route path="/detail/:id">
           <stockContext.Provider value={stock}>
-          <Detail shoesData={shoesData} stock={stock} stockChg={stockChg}></Detail>
+          <Suspense fallback={<div>로딩중 입니다..</div>}>
+            <Detail shoesData={shoesData} stock={stock} stockChg={stockChg}></Detail>
+          </Suspense>
           </stockContext.Provider>
         </Route>
        
